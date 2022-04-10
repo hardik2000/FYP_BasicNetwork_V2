@@ -31,7 +31,7 @@ const invokeTransaction = async (channelName, chaincodeName, fcn, args, username
             return;
         }
 
-        
+
 
         const connectOptions = {
             wallet, identity: username, discovery: { enabled: true, asLocalhost: true },
@@ -55,39 +55,86 @@ const invokeTransaction = async (channelName, chaincodeName, fcn, args, username
 
         let result
         let message;
-        if (fcn === "createCar" || fcn === "createPrivateCarImplicitForOrg1"
-            || fcn == "createPrivateCarImplicitForOrg2") {
-            result = await contract.submitTransaction(fcn, args[0], args[1], args[2], args[3], args[4]);
-            message = `Successfully added the car asset with key ${args[0]}`
+        if (fcn === "invoke") {
+            console.log(args[0], args[1], args[2], args[3])
+            result = await contract.submitTransaction(fcn, args[0], args[1], args[2], args[3], org_name);
+            console.log(result)
+            message = `Successfully added the asset with key ${args[0]} ${args[1]} ${args[2]}`
 
-        } else if (fcn === "changeCarOwner") {
-            result = await contract.submitTransaction(fcn, args[0], args[1]);
-            message = `Successfully changed car owner with key ${args[0]}`
-        } else if (fcn == "createPrivateCar" || fcn =="updatePrivateData") {
-            console.log(`Transient data is : ${transientData}`)
-            let carData = JSON.parse(transientData)
-            console.log(`car data is : ${JSON.stringify(carData)}`)
-            let key = Object.keys(carData)[0]
-            const transientDataBuffer = {}
-            transientDataBuffer[key] = Buffer.from(JSON.stringify(carData.car))
-            result = await contract.createTransaction(fcn)
-                .setTransient(transientDataBuffer)
-                .submit()
-            message = `Successfully submitted transient data`
+        } else if (fcn === "query") {
+            console.log(args[0], args[1], args[2])
+            let id = args[0] + "_" + args[1] + "_" + args[2]
+            result = await contract.evaluateTransaction(fcn, id);
+            console.log(result)
+            message = `Successfully queried the asset with key ${id}`
+
+        } else if (fcn === "history") {
+            console.log(args[0], args[1], args[2])
+            let id = args[0] + "_" + args[1] + "_" + args[2]
+            result = await contract.evaluateTransaction(fcn, id);
+            console.log(result)
+            message = `Successfully queried history for the asset with key ${id}`
+
+        } else if (fcn === "delete") {
+            console.log(args[0], args[1], args[2])
+            result = await contract.submitTransaction(fcn, args[0], args[1], args[2], org_name);
+            console.log(result)
+            message = `Successfully deleted the asset with key ${args[0]} ${args[1]} ${args[2]}`
+
+        } else if (fcn === "update") {
+            console.log(args[0], args[1], args[2], args[3])
+            result = await contract.submitTransaction(fcn, args[0], args[1], args[2], args[3], org_name);
+            console.log(result)
+            message = `Successfully updated the asset with key ${args[0]} ${args[1]} ${args[2]}`
+
+        } else if (fcn === "addChr") {
+            console.log(args[0], args[1], args[2], args[3])
+            result = await contract.submitTransaction(fcn, args[0], args[1], "CHR", args[2], args[3]);
+            console.log(result)
+            message = `Successfully added the asset with key ${args[0]} ${args[1]} ${args[2]} ${args[3]}`
+
+        } else if (fcn === "qChr") {
+            console.log(args[0])
+            let id = args[0] + "_CHR"
+            result = await contract.submitTransaction("query", id);
+            console.log(result)
+            message = `Successfully queried the asset with key ${id}`
+
+        } else if (fcn === "hChr") {
+            console.log(args[0])
+            let id = args[0] + "_CHR"
+            result = await contract.submitTransaction("history", id);
+            console.log(result)
+            message = `Successfully queried the asset history with key ${id}`
+
+        } else if (fcn === "createPrivateCert") {
+            console.log(args[0], args[1], args[2], args[3])
+            result = await contract.submitTransaction(fcn, org_name, args[0], args[1], args[2], args[3]);
+            console.log(result)
+            message = `Successfully created the private data asset with key ${args[0] + "_" + args[1] + "_" + args[2]}`
+
         }
         else {
-            return `Invocation require either createCar or changeCarOwner as function but got ${fcn}`
+            return `Invocation function not found ${fcn}`
         }
 
         await gateway.disconnect();
+        // console.log(result)
+        if (!result.toString()) {
+            result = "NIL";
+        } else {
 
-        result = JSON.parse(result.toString());
+            // console.log("hello", result.toString())
+            result = JSON.parse(result.toString());
+            // console.log("hello", result)
+        }
+
 
         let response = {
             message: message,
-            result
+            result: result
         }
-
+        // console.log("hello", response)
         return response;
 
 

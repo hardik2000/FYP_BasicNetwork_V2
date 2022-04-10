@@ -31,11 +31,13 @@ const query = async (channelName, chaincodeName, args, fcn, username, org_name) 
             return;
         }
 
+        const connectOptions = {
+            wallet, identity: username, discovery: { enabled: true, asLocalhost: true }
+        }
+
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
-        await gateway.connect(ccp, {
-            wallet, identity: username, discovery: { enabled: true, asLocalhost: true }
-        });
+        await gateway.connect(ccp, connectOptions);
 
         // Get the network (channel) our contract is deployed to.
         const network = await gateway.getNetwork(channelName);
@@ -44,13 +46,11 @@ const query = async (channelName, chaincodeName, args, fcn, username, org_name) 
         const contract = network.getContract(chaincodeName);
         let result;
 
-        if (fcn == "queryCar" || fcn =="queryCarsByOwner" || fcn == 'getHistoryForAsset' || fcn=='restictedMethod') {
-            result = await contract.evaluateTransaction(fcn, args[0]);
-
-        } else if (fcn == "readPrivateCar" || fcn == "queryPrivateDataHash"
-        || fcn == "collectionCarPrivateDetails") {
-            result = await contract.evaluateTransaction(fcn, args[0], args[1]);
-            // return result
+        if (fcn === "readPrivateDetails") {
+            console.log(args[0], args[1], args[2])
+            result = await contract.evaluateTransaction(fcn, args[0], args[0], args[1], args[2]);
+            console.log(result)
+            message = `Successfully created the private data asset with key ${args[0] + "_" + args[1] + "_" + args[2]}`
 
         }
         console.log(result)

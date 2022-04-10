@@ -20,6 +20,28 @@ const getCCP = async (org) => {
     const ccp = JSON.parse(ccpJSON);
     return ccp
 }
+// 'use strict';
+
+// var { Gateway, Wallets } = require('fabric-network');
+// const path = require('path');
+// const FabricCAServices = require('fabric-ca-client');
+// const fs = require('fs');
+
+// const util = require('util');
+
+// const getCCP = async (org) => {
+//     let ccpPath;
+//     if (org == "Org1") {
+//         ccpPath = path.resolve(__dirname, '..', '..', '..', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+//         // /home/teamdfyp/test/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/connection-org1.json
+//     } else if (org == "Org2") {
+//         ccpPath = path.resolve(__dirname, '..', '..', '..', 'organizations', 'peerOrganizations', 'org2.example.com', 'connection-org2.json');
+//     } else
+//         return null
+//     const ccpJSON = fs.readFileSync(ccpPath, 'utf8')
+//     const ccp = JSON.parse(ccpJSON);
+//     return ccp
+// }
 
 const getCaUrl = async (org, ccp) => {
     let caURL;
@@ -269,3 +291,8 @@ module.exports = {
     registerAndGerSecret: registerAndGerSecret
 
 }
+// async function main() {
+//     var res = getRegisteredUser("AB", "Org1", true);
+//     console.log(res);
+// }
+// main();
