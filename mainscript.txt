@@ -1,0 +1,100 @@
+sudo apt-get install curl
+sudo apt-get update
+sudo apt-get install golang
+sudo nano ~/.bashrc
+
+"""
+export PATH="$PATH:/usr/local/go/bin:$HOME/.go/bin"
+export GOPATH="$HOME/go"
+export GOROOT="/usr/local/go"
+export GOPATH="/usr/local/go"
+export PATH="$PATH:$GOPATH/bin"
+"""
+
+source ~/.bashrc
+sudo apt-get install nodejs
+sudo apt-get install npm
+sudo apt-get install python
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+apt-cache policy docker-ce
+sudo apt-get install -y docker-ce
+sudo apt-get install docker-compose
+sudo apt-get upgrade
+wget https://go.dev/dl/go1.13.linux-amd64.tar.gz
+tar -xzvf go1.13.linux-amd64.tar.gz
+source ~/.bashrc
+curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
+sudo apt-get install -y nodejs
+sudo apt-get update
+sudo apt-get upgrade
+curl -V
+npm -v
+docker version
+docker-compose version
+go version
+python -V
+node -v
+mkdir test
+cd test
+sudo curl -sSL https://bit.ly/2ysbOFE | sudo bash -s
+sudo docker images
+sudo docker run hello-world
+cd fabric-samples/
+cd bin
+pwd
+"""
+copy its PATH
+"""
+sudo nano ~/.bashrc
+
+"""
+export PATH="$PATH:$HOME/test/fabric-samples/bin"
+
+"""
+source ~/.bashrc
+
+"""
+close tab and open another one to see path variable
+Test in another terminal by typing peer cmd and see if its working fine or not
+"""
+git clone https://github.com/adhavpavan/BasicNetwork-2.0.git
+cd BasicNetwork-2.0/
+cd artifacts/channel/
+cryptogen generate --config=./crypto-config.yaml --output=./crypto-config/
+
+"""
+comment till line 10 in create-artifacts.sh
+
+"""
+./create-artifacts.sh 
+
+cd ..
+sudo docker-compose up -d
+sudo docker ps
+
+cd ..
+./createChannel.sh 
+./deployChaincode.sh
+
+
+"""
+Add certificated to this file present at this path
+/home/teamd/BasicNetwork-2.0/api-2.0/config/connection-org1.json
+/home/teamd/BasicNetwork-2.0/api-2.0/config/connection-org2.json
+
+Take certificated from 
+/home/teamd/BasicNetwork-2.0/artifacts/channel/crypto-config/peerOrganizations
+
+/home/teamd/BasicNetwork-2.0/artifacts/channel/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+/home/teamd/BasicNetwork-2.0/artifacts/channel/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
+/home/teamd/BasicNetwork-2.0/artifacts/channel/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
+
+similarly fro org2
+
+"""
+
+
+
+
