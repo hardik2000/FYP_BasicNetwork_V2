@@ -13,6 +13,7 @@ import Delete from '../Delete/Delete';
 import Verify from '../Verify/Verify';
 // import Register from '../Register/Register';
 import Request from '../Request/Request';
+import CreatePrivateData from '../CreatePrivateData/CreatePrivateData';
 
 import getToken from './getToken';
 
@@ -44,6 +45,7 @@ function App() {
                     <Route exact path="/Verify" element={<Verify />}>
                     </Route>
                     <Route exact path="/Request" element={<Request />}></Route>
+                    <Route exact path="/CreatePrivateData" element={<CreatePrivateData />}></Route>
                 </Routes>
             </BrowserRouter>
         </div>

@@ -49,6 +49,9 @@ export default function Dashboard() {
                     <Item><Link to="/Verify" className="btn btn-primary">Verify Resources</Link></Item>
                 </Grid>
                 <Grid item xs={12}>
+                    <Item><Link to="/CreatePrivateData" className="btn btn-primary">Create Private Resource</Link></Item>
+                </Grid>
+                <Grid item xs={12}>
                     <Item><Link to="/Request" className="btn btn-primary">Request Resources</Link></Item>
                 </Grid>
             </Grid>

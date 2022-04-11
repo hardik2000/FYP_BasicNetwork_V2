@@ -20,15 +20,21 @@ async function queryResources(credentials) {
 }
 
 export default function Query() {
-    const [username, setUserName] = useState();
+    const [userid, setUserId] = useState();
+    const [docid, setDocId] = useState();
+    const [aadharno, setAadharNo] = useState();
+
     async function handleSubmit(e) {
         e.preventDefault();
+        let orgname = JSON.parse(sessionStorage.getItem('loggedorgname'));
+        console.log("orgname", orgname);
+        console.log("aadharno", aadharno);
         const res = await queryResources({
             "fcn": "query",
             "peers": ["peer0.org1.example.com", "peer0.org2.example.com"],
             "chaincodeName": "basic",
             "channelName": "mychannel",
-            "args": [username]
+            "args": [orgname, userid, docid]
         });
         if (!res['result']['message']) {
             const element = "\n\nID DOES NOT EXIST";
@@ -57,8 +63,20 @@ export default function Query() {
             <form onSubmit={handleSubmit}>
                 <label>
                     <p>
-                        <span>ID&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <input type="text" onChange={e => setUserName(e.target.value)} />
+                        <span>AADHAR NO&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <input type="text" onChange={e => setAadharNo(e.target.value)} />
+                    </p>
+                </label>
+                <label>
+                    <p>
+                        <span>USER ID&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <input type="text" onChange={e => setUserId(e.target.value)} />
+                    </p>
+                </label>
+                <label>
+                    <p>
+                        <span>DOC ID&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <input type="text" onChange={e => setDocId(e.target.value)} />
                     </p>
                 </label>
                 <div><h1> </h1></div>

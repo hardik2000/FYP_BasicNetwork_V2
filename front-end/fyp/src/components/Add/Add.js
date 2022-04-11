@@ -7,6 +7,8 @@ import { JSHash, CONSTANTS } from "react-native-hash";
 
 async function addResources(credentials) {
     let token = JSON.parse(sessionStorage.getItem('token'));
+
+
     console.log("TOKEN ", token)
     return fetch('http://localhost:4000/channels/mychannel/chaincodes/basic', {
         method: 'POST',
@@ -20,19 +22,23 @@ async function addResources(credentials) {
 }
 
 export default function Add() {
-    const [username, setUserName] = useState();
+    const [userid, setUserId] = useState();
+    const [docid, setDocId] = useState();
     const [hash, setHash] = useState();
     const [aadharno, setAadharNo] = useState();
     // const hash;
     // const [file, setFile] = useState()
     async function handleSubmit(e) {
         e.preventDefault();
+        let orgname = JSON.parse(sessionStorage.getItem('loggedorgname'));
+        console.log("orgname", orgname);
+        console.log("aadharno", aadharno);
         const res = await addResources({
             "fcn": "invoke",
             "peers": ["peer0.org1.example.com", "peer0.org2.example.com"],
             "chaincodeName": "basic",
             "channelName": "mychannel",
-            "args": [username, hash]
+            "args": [orgname, userid, docid, hash]
         });
         console.log(res['result'])
         ReactDOM.render(
@@ -78,14 +84,20 @@ export default function Add() {
             <form onSubmit={handleSubmit}>
                 <label>
                     <p>
-                        <span>Aadhar No&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span>AADHAR NO&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         <input type="text" onChange={e => setAadharNo(e.target.value)} />
                     </p>
                 </label>
                 <label>
                     <p>
-                        <span>ID&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <input type="text" onChange={e => setUserName(e.target.value)} />
+                        <span>USER ID&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <input type="text" onChange={e => setUserId(e.target.value)} />
+                    </p>
+                </label>
+                <label>
+                    <p>
+                        <span>DOC ID&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <input type="text" onChange={e => setDocId(e.target.value)} />
                     </p>
                 </label>
                 <label>
