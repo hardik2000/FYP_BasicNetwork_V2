@@ -107,7 +107,7 @@ cd ../BasicNetwork-2.0/
 rm -rf /$HOME/BasicNetwork-2.0/artifacts/private-data
 cp -rf /$HOME/FYP_BasicNetwork_V2/artifacts/private-data ./artifacts/
 cp -rf /$HOME/FYP_BasicNetwork_V2/artifacts/src/github.com/chaincode /$HOME/BasicNetwork-2.0/artifacts/src/github.com
-
+cp -r FYP_BasicNetwork_V2/front-end/ BasicNetwork-2.0/
 
 ./deployChaincode.sh
 
